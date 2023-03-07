@@ -7,15 +7,15 @@ vBox offers a lightweight system that helps you hold up ==numerous== of things
 - [x] Warp Module
 - [x] Spawn Module
 - [x] Home Module
-- [] Ban Module
-- [] Kit Modules
-- [] Email Modules
-- [] Teleportation Modules
-- [] Inventory Modules
-- [] Time Modules
-- [] Nick Module
-- [] Discord Module
-- [] Weather Module
+- [ ] Ban Module
+- [ ] Kit Modules
+- [ ] Email Modules
+- [ ] Teleportation Modules
+- [ ] Inventory Modules
+- [ ] Time Modules
+- [ ] Nick Module
+- [ ] Discord Module
+- [ ] Weather Module
 
 ### Changelog
  **0.0.1** Initial Git
