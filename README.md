@@ -1,4 +1,4 @@
-![vBoxLogo](https://i.imgur.com/dHYdeMk.png)
+<span style="display:block;text-align:center">![vBoxLogo](https://i.imgur.com/dHYdeMk.png)</span>
 ## vBox-Official
 Are you done having to disable everything you do not need for your server when using essentials\craftbook?
 vBox offers a lightweight system that helps you hold up ==numerous== of things
