@@ -44,7 +44,7 @@ vBox offers a lightweight system that helps you hold up ==numerous== of things
 ```
 **0.0.2** More Handlers! D:
 ```
- Coming soon!
+ - Coming soon!
 ```
 
 ### Discord Link
