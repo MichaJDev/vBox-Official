@@ -39,16 +39,16 @@ public class WarnYmlHandler {
 	public static void createWarnsFile(Warn w) {
 		String hash = UUID.randomUUID().toString().substring(0, 5);
 		File file = new File(getWarnsFolder(w.getWarned()), "Warn#" + hash + ".yml");
-		
+
 		if (!file.exists()) {
-			try{
+			try {
 				file.createNewFile();
 				FileConfiguration cfg = YamlConfiguration.loadConfiguration(file);
-				createWarnLocals(w,cfg,file);
-			}catch(IOException e) {
+				createWarnLocals(w, cfg, file);
+			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			
+
 		}
 	}
 
@@ -58,5 +58,17 @@ public class WarnYmlHandler {
 		cfg.addDefault("Reason", w.getReason());
 		cfg.options().copyDefaults(true);
 		YmlHandler.saveConfig(cfg, f);
+	}
+
+	public static int getWarnAmount(User u) {
+		int amount = 0;
+		if (getWarnsFolder(u).list().length < 0) {
+			for (@SuppressWarnings("unused")
+			File file : getWarnsFolder(u).listFiles()) {
+				amount++;
+			}
+		}
+
+		return amount;
 	}
 }
