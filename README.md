@@ -48,4 +48,4 @@ vBox offers a lightweight system that helps you hold up ==numerous== of things
 ```
 
 ### Discord Link
-COMING SOON
+https://discord.gg/k7HBH6yv5f
