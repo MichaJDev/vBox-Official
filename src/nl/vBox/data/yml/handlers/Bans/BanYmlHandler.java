@@ -79,6 +79,7 @@ public class BanYmlHandler {
 
 		File file = new File(getBansFolder(b) + File.pathSeparator + "Ban#" + b.getUuid() + ".yml");
 		if (!file.exists()) {
+			updateGeneralBanFile(b, true);
 			try {
 				file.createNewFile();
 				createBanLocals(file, b, b.getUuid());
@@ -117,5 +118,14 @@ public class BanYmlHandler {
 			}
 		}
 		return b;
+	}
+
+	public static boolean isBanned(User u) {
+		Ban b = new Ban();
+		b.setBanned(u);
+		FileConfiguration cfg = YamlConfiguration.loadConfiguration(getGeneralBanFile(b));
+		boolean banned = cfg.getBoolean("Banned");
+		return banned;
+
 	}
 }
