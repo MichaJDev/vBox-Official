@@ -1,0 +1,73 @@
+main: nl.vBox.Main
+name: vBox
+version: 0.0.2
+description: The lightweight admintools package
+authors: [xFlakesID, MichaJDev, VyxCode]
+webiste: https://github.com/MichaJDev/vBox-Official
+load: POSTWORLD
+commands:
+   warp:
+     description: Teleport to Warps
+     permission: vBox.warps
+   setwarp:
+     description: Set a Warps
+     permission: vBox.warps
+   delwarp:
+     description: Delete a Warps
+     permission: vBox.warps
+   warps:
+     description: Warps list
+     permission: vBox.warps
+   home:
+     description: Teleport to Homes
+     permission: vBox.homes 
+   sethome:
+     description: Set a home
+     permission: vBox.homes
+   delhome:
+     description: Delete a home
+     permission: vBox.homes
+   homes:
+     description: Homes List
+     permission: vBox.homes 
+   spawn:
+     description: Teleport to Spawn
+     permission: vBox.warps 
+   setspawn:
+     description: Set spawnpoint
+     permission: vBox.warps 
+   ban:
+     description: Ban player
+     permission: vBox.warps 
+   unban:
+     description: Unban player
+     permission: vBox.warps
+   lookup:
+     description: Lookup player
+     permission: vBox.warps 
+   permissions:
+   vBox.*:
+     description: Admin node
+     children:
+        vBox.warps: true
+        vBox.homes: true
+        vBox.spawn: true
+        vBox.spawn.admin: true
+        vBox.bans: true
+   vBox.warps:
+     description: Warp node
+   vBox.homes:
+     description: Home node
+   vBox.spawn:
+     description: Spawn node
+   vBox.spawn.admin:
+     description: Spawn admin node
+     children:
+        vBox.spawn: true
+   vBox.bans:
+     description: Ban node
+   vBox.moderation:
+     description: All moding tools
+     children:
+       vBox.spawn.admin: true
+       vBox.bans: true

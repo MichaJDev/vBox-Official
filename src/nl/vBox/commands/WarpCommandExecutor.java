@@ -28,7 +28,11 @@ public class WarpCommandExecutor implements CommandExecutor {
 				if(wh.Exists(args[0])) {
 					p.sendMessage(main.colorize("&aTeleporting to warp: &6" + args[0]));
 					p.teleport(wh.Read(args[0]).getLocation());
+				}else {
+					p.sendMessage(main.colorize("&cWarp: &r" + args[0] + "&c does not exist"));
 				}
+			} else {
+				s.sendMessage(main.colorize("&cUsage: /warp <name>"));
 			}
 		} else {
 			s.sendMessage(main.colorize("&cYou do not have the permission to use that command!"));

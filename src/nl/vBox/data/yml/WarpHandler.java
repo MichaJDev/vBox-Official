@@ -50,7 +50,6 @@ public class WarpHandler {
 
 	public boolean Exists(String name) {
 		boolean exists = false;
-		Warp w = new Warp();
 		for (FileConfiguration cfg : WarpYmlHandler.getWarps()) {
 			if (cfg.getString("Name").equalsIgnoreCase(name)) {
 				exists = true;
