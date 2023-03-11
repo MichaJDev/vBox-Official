@@ -40,11 +40,21 @@ vBox offers a lightweight system that helps you hold up ==numerous== of things
    o Home
    o Warp
    o Config
-
 ```
 **0.0.2** More Handlers! D:
 ```
- - Coming soon!
+Finished:
+ - YMLHandlers
+  o Warn
+ - Handlers
+  o Warn
+ - DTOs
+  o Warn
+ - YML Files
+  o plugin.yml
+
+  Comments:
+    Cleaned up a lot of code 
 ```
 
 ### Discord Link
