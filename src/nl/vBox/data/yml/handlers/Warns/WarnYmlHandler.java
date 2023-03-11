@@ -2,6 +2,8 @@ package nl.vBox.data.yml.handlers.Warns;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import org.bukkit.configuration.file.FileConfiguration;
@@ -10,6 +12,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import nl.vBox.Main;
 import nl.vBox.data.dataobjects.User;
 import nl.vBox.data.dataobjects.Warn;
+import nl.vBox.data.dataobjects.handlers.DtoHandler;
 import nl.vBox.data.yml.handlers.YmlHandler;
 import nl.vBox.data.yml.handlers.Users.UserYmlHandler;
 import nl.vBox.utils.enums.LogSeverity;
@@ -44,7 +47,7 @@ public class WarnYmlHandler {
 			try {
 				file.createNewFile();
 				FileConfiguration cfg = YamlConfiguration.loadConfiguration(file);
-				createWarnLocals(w, cfg, file);
+				createWarnLocals(w, cfg, file, hash);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -52,10 +55,11 @@ public class WarnYmlHandler {
 		}
 	}
 
-	public static void createWarnLocals(Warn w, FileConfiguration cfg, File f) {
+	public static void createWarnLocals(Warn w, FileConfiguration cfg, File f, String Hash) {
 		cfg.addDefault("Warner", w.getWarned().getUuid());
 		cfg.addDefault("Warned", w.getWarned().getUuid());
 		cfg.addDefault("Reason", w.getReason());
+		cfg.addDefault("Hash", Hash);
 		cfg.options().copyDefaults(true);
 		YmlHandler.saveConfig(cfg, f);
 	}
@@ -70,5 +74,44 @@ public class WarnYmlHandler {
 		}
 
 		return amount;
+	}
+
+	public static File getWarnFile(User u, String hash) {
+		File f = new File(getWarnsFolder(u), "Warn#" + hash + ".yml");
+		return f;
+	}
+
+	public static Warn getWarn(User u, String hash) {
+		Warn w = new Warn();
+		for (FileConfiguration cfg : getWarns(u)) {
+			if (cfg.getString("Hash") == hash) {
+				w.setWarned(
+						DtoHandler.createUserDto(main.getServer().getPlayer(UUID.fromString(cfg.getString("Warned")))));
+				w.setWarner(
+						DtoHandler.createUserDto(main.getServer().getPlayer(UUID.fromString(cfg.getString("Warner")))));
+				w.setReason("Reason");
+				w.setHash(hash);
+			}
+		}
+		return w;
+	}
+
+	public static List<FileConfiguration> getWarns(User u) {
+		List<FileConfiguration> warns = new ArrayList<FileConfiguration>();
+		for (File file : getWarnsFolder(u).listFiles()) {
+			FileConfiguration cfg = YamlConfiguration.loadConfiguration(file);
+			warns.add(cfg);
+		}
+		return warns;
+	}
+
+	public static void updateWarn(Warn w) {
+		FileConfiguration cfg = YamlConfiguration.loadConfiguration(getWarnFile(w.getWarned(), w.getHash()));
+		cfg.set("Warner", w.getWarner().getUuid().toString());
+		cfg.set("Warned", w.getWarned().getUuid().toString());
+		cfg.set("Reason", w.getReason());
+		cfg.set("Hash", w.getHash());
+		cfg.options().copyDefaults(true);
+		YmlHandler.saveConfig(cfg, getWarnFile(w.getWarned(), w.getHash()));
 	}
 }
