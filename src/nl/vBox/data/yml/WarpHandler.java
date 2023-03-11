@@ -26,7 +26,7 @@ public class WarpHandler {
 	public Warp Read(String name) {
 		Warp w = new Warp();
 		for (FileConfiguration cfg : WarpYmlHandler.getWarps()) {
-			if (cfg.getString("Name") == name) {
+			if (cfg.getString("Name").equalsIgnoreCase(name)) {
 				Location loc = new Location(main.getServer().getWorld(cfg.getString("World")),
 						cfg.getDouble("Location.x"), cfg.getDouble("Location.y"), cfg.getDouble("Location.z"));
 				w.setName(cfg.getString("Name"));
@@ -39,12 +39,23 @@ public class WarpHandler {
 	public void Update(Warp w) {
 
 		for (FileConfiguration cfg : WarpYmlHandler.getWarps()) {
-			if (cfg.getString("Name") == w.getName()) {
+			if (cfg.getString("Name").equalsIgnoreCase(w.getName())) {
 				WarpYmlHandler.updateWarp(w);
 			} else {
 				main.getServer().getPlayer(w.getCreator().getUuid())
 						.sendMessage(main.colorize("&cWarp does not exist!"));
 			}
 		}
+	}
+
+	public boolean Exists(String name) {
+		boolean exists = false;
+		Warp w = new Warp();
+		for (FileConfiguration cfg : WarpYmlHandler.getWarps()) {
+			if (cfg.getString("Name").equalsIgnoreCase(name)) {
+				exists = true;
+			}
+		}
+		return exists;
 	}
 }
