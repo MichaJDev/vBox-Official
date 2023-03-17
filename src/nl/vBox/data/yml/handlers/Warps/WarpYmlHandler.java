@@ -51,6 +51,7 @@ public class WarpYmlHandler {
 		cfg.addDefault("Location.y", w.getLocation().getBlockY());
 		cfg.addDefault("Location.z", w.getLocation().getBlockZ());
 		cfg.addDefault("World", w.getLocation().getWorld());
+		cfg.addDefault("Creator", w.getCreator().getUuid());
 		cfg.options().copyDefaults(true);
 		YmlHandler.saveConfig(cfg, file);
 	}
@@ -80,5 +81,17 @@ public class WarpYmlHandler {
 				cfg.set("World", w.getLocation().getWorld().toString());
 			}
 		}
+	}
+
+	public static void deleteWarp(Warp w) {
+		File f = getWarpFile(w);
+		if (f.exists()) {
+			try {
+				f.delete();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
 	}
 }

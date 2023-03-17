@@ -72,6 +72,9 @@ public class Main extends JavaPlugin {
 			e.printStackTrace();
 		}
 		getCommand("warp").setExecutor(new WarpCommandExecutor(this));
+		getCommand("warps").setExecutor(new WarpCommandExecutor(this));
+		getCommand("delwarp").setExecutor(new WarpCommandExecutor(this));
+		getCommand("setwarps").setExecutor(new WarpCommandExecutor(this));
 	}
 
 	private void getListeners() {

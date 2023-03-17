@@ -1,5 +1,8 @@
 package nl.vBox.data.yml;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.bukkit.Location;
 import org.bukkit.configuration.file.FileConfiguration;
 
@@ -36,6 +39,15 @@ public class WarpHandler {
 		return w;
 	}
 
+	public List<Warp> GetAll() {
+		List<Warp> warps = new ArrayList<Warp>();
+		for (FileConfiguration cfg : WarpYmlHandler.getWarps()) {
+			Warp w = DtoHandler.ymlToWarpDto(cfg);
+			warps.add(w);
+		}
+		return warps;
+	}
+
 	public void Update(Warp w) {
 
 		for (FileConfiguration cfg : WarpYmlHandler.getWarps()) {
@@ -56,5 +68,20 @@ public class WarpHandler {
 			}
 		}
 		return exists;
+	}
+
+	public boolean Delete(String name) {
+		if (Exists(name)) {
+			Warp w = new Warp();
+			for (Warp warp : GetAll()) {
+				if (w.getName().equalsIgnoreCase(warp.getName())) {
+					WarpYmlHandler.deleteWarp(w);
+					return true;
+				} else {
+					return false;
+				}
+			}
+		}
+		return false;
 	}
 }
