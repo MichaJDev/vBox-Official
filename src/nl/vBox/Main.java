@@ -5,6 +5,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import net.md_5.bungee.api.ChatColor;
 import nl.vBox.commands.HelpCommandExecutor;
+import nl.vBox.commands.SpawnCommandExecutor;
 import nl.vBox.commands.WarpCommandExecutor;
 import nl.vBox.data.dataobjects.User;
 import nl.vBox.data.yml.handlers.YmlHandler;
@@ -36,7 +37,7 @@ public class Main extends JavaPlugin {
 	}
 
 	public String colorize(String msg) {
-		return ChatColor.translateAlternateColorCodes('&', msg);
+		return ChatColor.translateAlternateColorCodes('&', "[&3vBox&r] " + msg);
 	}
 
 	public Player getPlayer(User u) {
@@ -75,6 +76,9 @@ public class Main extends JavaPlugin {
 		getCommand("warps").setExecutor(new WarpCommandExecutor(this));
 		getCommand("delwarp").setExecutor(new WarpCommandExecutor(this));
 		getCommand("setwarps").setExecutor(new WarpCommandExecutor(this));
+		getCommand("setspawn").setExecutor(new SpawnCommandExecutor(this));
+		getCommand("spawn").setExecutor(new SpawnCommandExecutor(this));
+
 	}
 
 	private void getListeners() {

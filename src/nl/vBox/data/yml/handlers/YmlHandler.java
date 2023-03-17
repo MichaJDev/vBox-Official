@@ -7,7 +7,6 @@ import org.bukkit.configuration.file.FileConfiguration;
 
 import nl.vBox.Main;
 import nl.vBox.data.yml.handlers.Config.ConfigYmlHandler;
-import nl.vBox.data.yml.handlers.Spawn.SpawnYmlHandler;
 import nl.vBox.data.yml.handlers.Users.UserYmlHandler;
 import nl.vBox.data.yml.handlers.Warps.WarpYmlHandler;
 import nl.vBox.utils.enums.LogSeverity;
@@ -29,14 +28,6 @@ public class YmlHandler {
 		if (!WarpYmlHandler.getWarpsFolder().exists()) {
 			main.log("Main warps folder not found, creating!", LogSeverity.INFO);
 			WarpYmlHandler.createWarpsFolder();
-		}
-		if (!SpawnYmlHandler.getSpawnFolder().exists()) {
-			main.log("Main spawn folder not found, creating!", LogSeverity.INFO);
-			SpawnYmlHandler.createSpawnFolder();
-			if (!SpawnYmlHandler.getSpawnFile().exists()) {
-				main.log("Main spawn file not found, creating!", LogSeverity.INFO);
-				SpawnYmlHandler.createSpawnFile();
-			}
 		}
 		if (!ConfigYmlHandler.getConfigFile().exists()) {
 			main.log("Main config file not found, creating!", LogSeverity.INFO);

@@ -29,9 +29,8 @@ public class SpawnYmlHandler {
 		return file;
 	}
 
-	public static void createSpawnFile() {
+	public static void createSpawnFile(Spawn s) {
 		File file = new File(getSpawnFolder() + File.pathSeparator + "spawn.yml");
-		Spawn s = new Spawn();
 		if (!file.exists()) {
 			try {
 				file.createNewFile();
@@ -53,17 +52,16 @@ public class SpawnYmlHandler {
 		cfg.options().copyDefaults(true);
 		YmlHandler.saveConfig(cfg, file);
 	}
+
 	public static File getSpawnFile() {
-		File file = new File(getSpawnFolder() + File.pathSeparator+ "spawn.yml");
-		if(!file.exists()) {
-			createSpawnFile();
-			return file;
-		}
+		File file = new File(getSpawnFolder() + File.pathSeparator + "spawn.yml");
 		return file;
 	}
+
 	public static FileConfiguration getSpawnCfg() {
 		return YamlConfiguration.loadConfiguration(getSpawnFile());
 	}
+
 	public static void updateSpawn(Spawn s) {
 		FileConfiguration cfg = getSpawnCfg();
 		cfg.set("World", s.getWorld());
