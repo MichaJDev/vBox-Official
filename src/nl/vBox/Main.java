@@ -4,13 +4,12 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import net.md_5.bungee.api.ChatColor;
-import nl.vBox.commands.HelpCommandExecutor;
+import nl.vBox.commands.HomeCommandExecutor;
 import nl.vBox.commands.SpawnCommandExecutor;
 import nl.vBox.commands.WarpCommandExecutor;
 import nl.vBox.data.dataobjects.User;
 import nl.vBox.data.yml.handlers.YmlHandler;
 import nl.vBox.utils.enums.LogSeverity;
-import nl.vBox.utils.general.CommandUtils;
 import nl.vBox.utils.general.FileUtils;
 import nl.vBox.utils.pages.PageHandler;
 
@@ -66,19 +65,16 @@ public class Main extends JavaPlugin {
 	}
 
 	private void getCommands() {
-		try {
-			CommandUtils.registerFakeCommand(new HelpCommandExecutor(), this);
-		} catch (ReflectiveOperationException e) {
-			this.getLogger().severe("Could not register custom command!");
-			e.printStackTrace();
-		}
 		getCommand("warp").setExecutor(new WarpCommandExecutor(this));
 		getCommand("warps").setExecutor(new WarpCommandExecutor(this));
 		getCommand("delwarp").setExecutor(new WarpCommandExecutor(this));
 		getCommand("setwarps").setExecutor(new WarpCommandExecutor(this));
 		getCommand("setspawn").setExecutor(new SpawnCommandExecutor(this));
 		getCommand("spawn").setExecutor(new SpawnCommandExecutor(this));
-
+		getCommand("home").setExecutor(new HomeCommandExecutor(this));
+		getCommand("sethome").setExecutor(new HomeCommandExecutor(this));
+		getCommand("delhome").setExecutor(new HomeCommandExecutor(this));
+		getCommand("homes").setExecutor(new HomeCommandExecutor(this));
 	}
 
 	private void getListeners() {

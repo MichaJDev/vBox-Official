@@ -53,4 +53,14 @@ public class HomeHandler {
 		}
 	}
 
+	public void Delete(Player p, String name) {
+		User u = DtoHandler.createUserDto(p);
+		for(Home h : HomeYmlHandler.getHomes(u)) {
+			if(h.getName().equalsIgnoreCase(name)) {
+				HomeYmlHandler.deleteHome(h);
+			}
+		}
+		
+	}
+
 }

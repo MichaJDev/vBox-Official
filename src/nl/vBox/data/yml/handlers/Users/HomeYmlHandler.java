@@ -77,8 +77,11 @@ public class HomeYmlHandler {
 		cfg.set("Home.Owner", h.getOwner().getUuid().toString());
 		YmlHandler.saveConfig(cfg, getUserHomeFile(h.getOwner(), h.getName()));
 	}
-
-
+	
+	public static void deleteHome(Home h) {
+		File file = getUserHomeFile(h.getOwner(), h.getName());
+		file.delete();
+	}
 
 	public static List<FileConfiguration> getUserHomeListCfg(User u) {
 		List<FileConfiguration> homes = new ArrayList<FileConfiguration>();
@@ -101,5 +104,14 @@ public class HomeYmlHandler {
 			}
 		}
 		return home;
+	}
+
+	public static List<Home> getHomes(User u) {
+		List<Home> homes = new ArrayList<Home>();
+		for (FileConfiguration cfg : getUserHomeListCfg(u)) {
+			Home h = DtoHandler.ymlHomeToDto(cfg);
+			homes.add(h);
+		}
+		return homes;
 	}
 }
