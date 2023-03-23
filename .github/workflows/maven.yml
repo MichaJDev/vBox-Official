@@ -53,6 +53,6 @@ jobs:
       - name: Download Artifact
         uses: actions/download-artifact@v3
         with:
-          name: *.jar
+          name: target/*.jar
       - name: Test-Artifact
         run: ls -R
