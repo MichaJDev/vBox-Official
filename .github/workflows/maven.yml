@@ -16,8 +16,9 @@ on:
 
 jobs:
   create-artifact-dir:
-    - uses: actions/checkout@v3
-    - run: mkdir -p stc/target/deploy
+    steps:
+      - uses: actions/checkout@v3
+      - run: mkdir -p src/target/deploy
   build:
 
     runs-on: ubuntu-latest
