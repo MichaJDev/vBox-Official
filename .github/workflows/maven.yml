@@ -53,6 +53,6 @@ jobs:
       - name: Download Artifact
         uses: actions/download-artifact@v3
         with:
-          name: target/*.jar
+          name: github-actions-artifact
       - name: Test-Artifact
         run: ls -R
