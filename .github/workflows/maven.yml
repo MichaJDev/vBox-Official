@@ -16,6 +16,7 @@ on:
 
 jobs:
   create-artifact-dir:
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - run: mkdir -p src/target/deploy
