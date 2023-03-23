@@ -17,9 +17,8 @@ on:
 jobs:
 
   build:
-
+    name: Build Maven
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v3
         name: Step 1 - Checkout Github
@@ -42,11 +41,18 @@ jobs:
           restore-keys: ${{ runner.os }}-m2
 
       - name: Step 5 - Persist workflow data as artificats
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: github-actions-artifact
           path: staging
-        
-
-
-          
+  release-project:
+    name: ReleaseProject
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Download Artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: *.jar
+      - name: Test-Artifact
+        run: ls -R
