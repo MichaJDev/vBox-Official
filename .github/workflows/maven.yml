@@ -21,7 +21,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Step 1 - Checkout main branch for GitHub
+    - name: Step 1 - Checkout main branch from GitHub 
       uses: actions/checkout@v3
     - name: Step 2 - Setup JDK 1.17
       uses: actions/setup-java@v3
