@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - run: mkdir -p src/target/deploy
+      - run: mkdir -p ${{Github.ref_name}}/target/deploy
   build:
 
     runs-on: ubuntu-latest
@@ -59,4 +59,4 @@ jobs:
       - uses: actions/upload-artifact@v3
         with:
           name: vBox-Official-0.0.1.jar
-          path: src/target/deploy
+          path: ${{Github.ref_name}}/target/deploy
