@@ -6,7 +6,7 @@
 
   <groupId>vBox</groupId>
   <artifactId>vboxofficial</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>1.0.0-RELEASE</version>
 
   <packaging>jar</packaging>
     <distributionManagement>
@@ -51,7 +51,7 @@
           <artifactId>maven-antrun-plugin</artifactId>
           <configuration>
               <tasks>
-                  <copy file="target/vboxofficial-0.0.1-SNAPSHOT.jar" todir="target/plugins"/>
+                  <copy file="target/vBox-Official-1.0.0-RELEASE.jar" todir="target/plugins"/>
               </tasks>
           </configuration>
           <executions>
