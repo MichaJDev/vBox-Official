@@ -63,6 +63,7 @@ jobs:
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_name: github-actions-artifact
+          asset_path: staging/github-actions-artifact
           asset_content_type: application/zip
   release-project:
     name: ReleaseProject
