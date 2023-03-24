@@ -31,7 +31,7 @@ public class YmlWarpHandler {
 		return new File(main.getDataFolder(), "Warps");
 	}
 
-	public void createWarpsFolder(Warp w) {
+	public void createWarpFile(Warp w) {
 		File file = new File(getWarpsFolder(), "Warp#" + w.getHash() + ".yml");
 		if (!file.exists()) {
 			try {
@@ -60,10 +60,21 @@ public class YmlWarpHandler {
 		}
 	}
 
+	private File getWarpFile(Warp w) {
+		File file = new File(getWarpsFolder(), "Warp#" + w.getHash() + ".yml");
+		if (file.exists())
+			return file;
+		return file;
+	}
+
+	private FileConfiguration getWarpCfg(Warp w) {
+		return YamlConfiguration.loadConfiguration(getWarpFile(w));
+	}
+
 	public Warp getWarp(String name) {
 		Warp w = new Warp();
 		for (Warp warp : getWarps()) {
-			if (name.equalsIgnoreCase(w.getName())) {
+			if (name.equalsIgnoreCase(warp.getName())) {
 				w = warp;
 			}
 		}
@@ -79,6 +90,38 @@ public class YmlWarpHandler {
 		}
 		return warps;
 
+	}
+
+	public void updateWarp(Warp w) {
+		FileConfiguration cfg = getWarpCfg(w);
+		cfg.set("Hash", w.getHash());
+		cfg.set("Name", w.getName());
+		cfg.set("Location.x", w.getLocation().getBlockX());
+		cfg.set("Location.y", w.getLocation().getBlockY());
+		cfg.set("Location.z", w.getLocation().getBlockZ());
+		cfg.set("World", w.getLocation().getWorld().getName());
+		cfg.set("Creator", w.getCreator().getUuid().toString());
+		try {
+			cfg.save(getWarpFile(w));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void deleteWarp(Warp w) {
+		File file = getWarpFile(w);
+		if (file.exists())
+			file.delete();
+	}
+
+	public boolean Exists(String name) {
+		boolean exists = false;
+		for (Warp warp : getWarps()) {
+			if (name.equalsIgnoreCase(warp.getName())) {
+				exists = true;
+			}
+		}
+		return exists;
 	}
 
 }
