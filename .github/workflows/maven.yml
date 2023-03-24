@@ -43,7 +43,7 @@ jobs:
       - name: Step 5 - Persist workflow data as artificats
         uses: actions/upload-artifact@v3
         with:
-          name: github-actions-artifact
+          name: vBox-Official-Release
           path: staging
   release-project:
     name: ReleaseProject
@@ -53,6 +53,6 @@ jobs:
       - name: Download Artifact
         uses: actions/download-artifact@v3
         with:
-          name: github-actions-artifact
+          name: vBox-Official-Release
       - name: Test-Artifact
         run: ls -R
