@@ -13,8 +13,15 @@ import vBox.vboxofficial.commands.SetHomeCmd;
 import vBox.vboxofficial.commands.SetSpawnCmd;
 import vBox.vboxofficial.commands.SetWarpCmd;
 import vBox.vboxofficial.commands.SpawnCmd;
+import vBox.vboxofficial.commands.TpAcceptCmd;
+import vBox.vboxofficial.commands.TpCmd;
+import vBox.vboxofficial.commands.TpHereCmd;
+import vBox.vboxofficial.commands.TpaCmd;
 import vBox.vboxofficial.commands.WarpCmd;
+import vBox.vboxofficial.commands.WarpsCmd;
+import vBox.vboxofficial.data.yml.YmlConfigHandler;
 import vBox.vboxofficial.data.yml.YmlSpawnHandler;
+import vBox.vboxofficial.data.yml.YmlTpHandler;
 import vBox.vboxofficial.data.yml.YmlUserHandler;
 import vBox.vboxofficial.data.yml.YmlWarpHandler;
 import vBox.vboxofficial.dtos.User;
@@ -27,6 +34,8 @@ public class Main extends JavaPlugin {
 	private YmlUserHandler uh = new YmlUserHandler(this);
 	private YmlSpawnHandler sh = new YmlSpawnHandler(this);
 	private YmlWarpHandler wh = new YmlWarpHandler(this);
+	private YmlConfigHandler ch = new YmlConfigHandler(this);
+	private YmlTpHandler th = new YmlTpHandler(this);
 
 	public static Main getInstance() {
 		return main;
@@ -62,18 +71,24 @@ public class Main extends JavaPlugin {
 	@Override
 	public void onEnable() {
 		log("Initialising vBox", LogSeverity.INFO);
-		uh.createUsersFolder();
-		sh.createSpawnFirstTime();
-		wh.createWarpsFolder();
-		log("Injecting Listeners", LogSeverity.INFO);
-		getListeners();
-		log("Injecting Commands", LogSeverity.INFO);
-		getCommands();
+		init();
 	}
 
 	@Override
 	public void onDisable() {
 
+	}
+
+	private void init() {
+		uh.createUsersFolder();
+		sh.createSpawnFirstTime();
+		wh.createWarpsFolder();
+		ch.createConfigFile();
+		th.createTpFolder();
+		log("Injecting Listeners", LogSeverity.INFO);
+		getListeners();
+		log("Injecting Commands", LogSeverity.INFO);
+		getCommands();
 	}
 
 	private void getCommands() {
@@ -88,6 +103,14 @@ public class Main extends JavaPlugin {
 		getCommand("warp").setExecutor(new WarpCmd(this));
 		getCommand("delwarp").setExecutor(new DelWarpCmd(this));
 		getCommand("warps").setExecutor(new WarpsCmd(this));
+		getCommand("tp").setExecutor(new TpCmd(this));
+		getCommand("tphere").setExecutor(new TpHereCmd(this));
+		getCommand("tpa").setExecutor(new TpaCmd(this));
+		getCommand("tpahere").setExecutor(new TpaHereCmd(this));
+		getCommand("tpaccept").setExecutor(new TpAcceptCmd(this));
+		getCommand("tpdeny").setExecutor(new TpDenyCmd(this));
+		getCommand("tptoggle").setExecutor(new TpToggleCmd(this));
+		getCommand("back").setExecutor(new BackCmd(this));
 	}
 
 	private void getListeners() {

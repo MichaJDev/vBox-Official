@@ -91,6 +91,17 @@ public class YmlUserHandler {
 		return exists;
 	}
 
+	public boolean exists(String name) {
+		boolean exists = false;
+		for (File file : getUsersFolder().listFiles()) {
+			FileConfiguration cfg = YamlConfiguration.loadConfiguration(file);
+			if (name.equalsIgnoreCase(cfg.getString("Name")) || name.equalsIgnoreCase(cfg.getString("DisplayName"))) {
+				exists = true;
+			}
+		}
+		return exists;
+	}
+
 	public FileConfiguration getUserConfig(User u) {
 		File file = new File(getUserFolder(u), "user.yml");
 		return YamlConfiguration.loadConfiguration(file);

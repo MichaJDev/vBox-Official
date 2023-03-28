@@ -25,23 +25,29 @@ public class DelHomeCmd implements CommandExecutor {
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 		if (!(sender instanceof Player)) {
 			main.log("You are not allowed to use this command as Console!", LogSeverity.WARN);
-		} else {
-			Player p = (Player) sender;
-			if (args.length > 1) {
-				p.sendMessage(main.colorize("&cToo many arguments, Usage /sethome <name>"));
-			} else if (args.length < 1) {
-				p.sendMessage(main.colorize("&cToo little arguments, Usage /sethome <name>"));
-			} else {
-				Home h = hh.getHome(DtoHandler.createUserDto(p), args[0]);
-				if (h.getHash() != null) {
-					hh.delete(h);
-					p.sendMessage(main.colorize("&4Home succesfully deleted&r: " + h.getName()));
-				} else {
-					p.sendMessage(main.colorize("&cHome not found!"));
-				}
-			}
+			return true;
 		}
-		return false;
+
+		Player player = (Player) sender;
+
+		if (args.length > 1) {
+			player.sendMessage(main.colorize("&cToo many arguments, Usage /sethome <name>"));
+			return true;
+		} else if (args.length < 1) {
+			player.sendMessage(main.colorize("&cToo little arguments, Usage /sethome <name>"));
+			return true;
+		}
+
+		Home home = hh.getHome(DtoHandler.createUserDto(player), args[0]);
+
+		if (home.getHash() != null) {
+			hh.delete(home);
+			player.sendMessage(main.colorize("&4Home successfully deleted&r: " + home.getName()));
+		} else {
+			player.sendMessage(main.colorize("&cHome not found!"));
+		}
+
+		return true;
 	}
 
 }

@@ -20,27 +20,31 @@ public class SpawnCmd implements CommandExecutor {
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-		YmlSpawnHandler sh = new YmlSpawnHandler(main);
-		if (command.getName().equalsIgnoreCase("spawn")) {
-			if (!(sender instanceof Player)) {
-				main.log("You are not allowed to use this command as console", LogSeverity.WARN);
-			} else {
+	    YmlSpawnHandler sh = new YmlSpawnHandler(main);
+	    if (command.getName().equalsIgnoreCase("spawn")) {
+	        if (!(sender instanceof Player)) {
+	            main.log("You are not allowed to use this command as console", LogSeverity.WARN);
+	            return true;
+	        }
 
-				Player p = (Player) sender;
-				if (p.hasPermission("vBox.spawn")) {
-					if (args.length < 0) {
-						p.sendMessage(main.colorize("&cToo many arguments: Usage /spawn"));
-					} else {
-						Spawn s = sh.getSpawn();
-						p.teleport(s.getLoc());
-						p.sendMessage(main.colorize("&aTeleported to Spawn!"));
-					}
-				} else {
-					p.sendMessage(main.colorize("&cYou have no permission to use that"));
-				}
-			}
-		}
-		return false;
+	        Player p = (Player) sender;
+	        if (!p.hasPermission("vBox.spawn")) {
+	            p.sendMessage(main.colorize("&cYou do not have permission to use this command!"));
+	            return true;
+	        }
+
+	        if (args.length > 0) {
+	            p.sendMessage(main.colorize("&cToo many arguments: Usage /spawn"));
+	            return true;
+	        }
+
+	        Spawn s = sh.getSpawn();
+	        p.teleport(s.getLoc());
+	        p.sendMessage(main.colorize("&aTeleported to Spawn!"));
+	    }
+
+	    return true;
 	}
+
 
 }

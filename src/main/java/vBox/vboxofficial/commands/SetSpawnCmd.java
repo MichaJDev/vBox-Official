@@ -24,26 +24,32 @@ public class SetSpawnCmd implements CommandExecutor {
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-		if (command.getName().equalsIgnoreCase("setspawn")) {
-			if (sender instanceof Player) {
-				Player p = (Player) sender;
-				if (p.hasPermission("vBox.moderation")) {
-					if (args.length < 0) {
-						p.sendMessage(main.colorize("&cToo many arguments!"));
-						return true;
-					}
-					YmlSpawnHandler sh = new YmlSpawnHandler(main);
-					User u = DtoHandler.createUserDto(p);
-					sh.updateSpawn(u);
-					p.sendMessage(main.colorize("&aSpawn set!"));
-				} else {
-					p.sendMessage("&cYou do not have the permission to use this command!");
-				}
-			} else {
-				main.log("You are not allowed to use this command as Console", LogSeverity.WARN);
-			}
+		if (!command.getName().equalsIgnoreCase("setspawn")) {
+			return false;
 		}
-		return false;
+		
+		if (!(sender instanceof Player)) {
+			main.log("You are not allowed to use this command on console!", LogSeverity.WARN);
+			return false;
+		}
+		
+		Player p = (Player) sender;
+		if (!p.hasPermission("vBox.moderation")) {
+			p.sendMessage(main.colorize("&cYou do not have the permission to use this command!"));
+			return false;
+		}
+		
+		if (args.length > 0) {
+			p.sendMessage(main.colorize("&cToo many arguments!"));
+			return true;
+		}
+		
+		YmlSpawnHandler sh = new YmlSpawnHandler(main);
+		User u = DtoHandler.createUserDto(p);
+		sh.updateSpawn(u);
+		p.sendMessage(main.colorize("&aSpawn set!"));
+		
+		return true;
 	}
 
 }

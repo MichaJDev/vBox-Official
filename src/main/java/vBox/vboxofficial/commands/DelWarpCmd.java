@@ -20,35 +20,37 @@ public class DelWarpCmd implements CommandExecutor {
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-		if (command.getName().equalsIgnoreCase("delwarp")) {
-			if (!(sender instanceof Player)) {
-				main.log("You are not allowed to use that commands as Console!", LogSeverity.INFO);
-			} else {
-				Player p = (Player) sender;
-				if (p.hasPermission("vbox.moderation")) {
-					if (args.length == 0) {
-						p.sendMessage(main.colorize("&cToo little arguments! Usage /warp <name>"));
-						return true;
-					} else if (args.length > 1) {
-						p.sendMessage(main.colorize("&cToo many arguments! Usage /warp <name>"));
-						return true;
-					} else {
-						YmlWarpHandler wh = new YmlWarpHandler(main);
-
-						if (wh.Exists(args[0])) {
-							Warp w = wh.getWarp(args[0]);
-							wh.deleteWarp(w);
-							p.sendMessage(main.colorize("&aWarp: &r" + w.getName() + " &a succesfully deleted!"));
-						} else {
-							p.sendMessage(main.colorize("&cThis warp doesnt exist!"));
-						}
-					}
-				} else {
-					p.sendMessage(main.colorize("&cYou don't have permission to do that!"));
-				}
-			}
+		if (!command.getName().equalsIgnoreCase("delwarp")) {
+			return false;
 		}
-		return false;
+
+		if (!(sender instanceof Player)) {
+			main.log("You are not allowed to use that command as Console!", LogSeverity.INFO);
+			return true;
+		}
+
+		Player player = (Player) sender;
+		if (!player.hasPermission("vbox.moderation")) {
+			player.sendMessage(main.colorize("&cYou don't have permission to do that!"));
+			return true;
+		}
+
+		if (args.length != 1) {
+			player.sendMessage(main.colorize("&cInvalid arguments! Usage: /delwarp <name>"));
+			return true;
+		}
+
+		YmlWarpHandler wh = new YmlWarpHandler(main);
+		if (!wh.Exists(args[0])) {
+			player.sendMessage(main.colorize("&cThis warp doesn't exist!"));
+			return true;
+		}
+
+		Warp warp = wh.getWarp(args[0]);
+		wh.deleteWarp(warp);
+		player.sendMessage(main.colorize("&aWarp: &r" + warp.getName() + " &asuccessfully deleted!"));
+
+		return true;
 	}
 
 }
