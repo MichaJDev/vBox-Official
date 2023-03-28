@@ -17,6 +17,7 @@ import vBox.vboxofficial.commands.TpAcceptCmd;
 import vBox.vboxofficial.commands.TpCmd;
 import vBox.vboxofficial.commands.TpHereCmd;
 import vBox.vboxofficial.commands.TpaCmd;
+import vBox.vboxofficial.commands.TpaHereCmd;
 import vBox.vboxofficial.commands.WarpCmd;
 import vBox.vboxofficial.commands.WarpsCmd;
 import vBox.vboxofficial.data.yml.YmlConfigHandler;
