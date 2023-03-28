@@ -4,6 +4,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import net.md_5.bungee.api.ChatColor;
+import vBox.vboxofficial.commands.BackCmd;
 import vBox.vboxofficial.commands.DelHomeCmd;
 import vBox.vboxofficial.commands.DelWarpCmd;
 import vBox.vboxofficial.commands.HomeCmd;
@@ -15,7 +16,9 @@ import vBox.vboxofficial.commands.SetWarpCmd;
 import vBox.vboxofficial.commands.SpawnCmd;
 import vBox.vboxofficial.commands.TpAcceptCmd;
 import vBox.vboxofficial.commands.TpCmd;
+import vBox.vboxofficial.commands.TpDenyCmd;
 import vBox.vboxofficial.commands.TpHereCmd;
+import vBox.vboxofficial.commands.TpToggleCmd;
 import vBox.vboxofficial.commands.TpaCmd;
 import vBox.vboxofficial.commands.TpaHereCmd;
 import vBox.vboxofficial.commands.WarpCmd;

@@ -4,10 +4,15 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
+import vBox.vboxofficial.Main;
+
 public class TpDenyCmd implements CommandExecutor {
 
-	public TpDenyCmd() {
-		// TODO Auto-generated constructor stub
+
+	private Main main = Main.getInstance();
+	
+	public TpDenyCmd(Main _main) {
+		main = _main;
 	}
 
 	@Override
