@@ -15,49 +15,60 @@ import vBox.vboxofficial.utils.LogSeverity;
 public class SetHomeCmd implements CommandExecutor {
 
 	private Main main = Main.getInstance();
-	private YmlHomeHandler hh;
 
 	public SetHomeCmd(Main _main) {
 		main = _main;
-		hh = new YmlHomeHandler(_main);
+
 	}
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+		YmlHomeHandler hh = new YmlHomeHandler(main);
 		if (!(sender instanceof Player)) {
 			main.log("You are not allowed to use this command on console!", LogSeverity.WARN);
-		} else {
-			Player p = (Player) sender;
+			return false;
+		}
 
-			for (PermissionAttachmentInfo permission : p.getEffectivePermissions()) {
-				if ((permission.getPermission().startsWith("vBox.homes")) && (permission.getValue())) {
-					int homeAmount = 0;
+		Player p = (Player) sender;
 
-					try {
-						homeAmount = Integer.parseInt(permission.getPermission().replace("vBox.homes", ""));
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-					if (hh.amount(DtoHandler.createUserDto(p)) >= homeAmount) {
-						p.sendMessage(main.colorize("You've reached the max amount of homes allowed!"));
-					} else if (p.hasPermission("vBox.homes.*") || hh.amount(DtoHandler.createUserDto(p)) < homeAmount
-							|| p.isOp()) {
-						if (args.length < 1) {
-							p.sendMessage(main.colorize("&cToo many arguments, Usage /sethome <name>"));
-						} else if (args.length > 1) {
-							p.sendMessage(main.colorize("&cToo little arguments, Usage /sethome <name>"));
-						} else {
-							Home h = DtoHandler.createHomeDto(p, args[0]);
-							hh.createHome(h);
-							p.sendMessage(main.colorize("&4Succesfully set home&r: " + h.getName()));
-						}
-					}
-				} else {
-					p.sendMessage(main.colorize("&cYou have no permission to use that"));
+		boolean hasHomePermission = false;
+		int homeAmount = 0;
+		for (PermissionAttachmentInfo permission : p.getEffectivePermissions()) {
+			String perm = permission.getPermission();
+			if (perm.startsWith("vBox.homes") && permission.getValue()) {
+				try {
+					homeAmount = Integer.parseInt(perm.replace("vBox.homes", ""));
+					hasHomePermission = true;
+				} catch (Exception e) {
+					e.printStackTrace();
 				}
+				break;
+			}
+		}
+
+		if (!hasHomePermission) {
+			p.sendMessage(main.colorize("&cYou have no permission to use that"));
+			return false;
+		}
+
+		if (hh.amount(DtoHandler.createUserDto(p)) >= homeAmount) {
+			p.sendMessage(main.colorize("You've reached the max amount of homes allowed!"));
+			return false;
+		}
+
+		if (p.hasPermission("vBox.homes.*") || hh.amount(DtoHandler.createUserDto(p)) < homeAmount || p.isOp()) {
+			if (args.length != 1) {
+				p.sendMessage(main.colorize("&cUsage: /sethome <name>"));
+				return false;
 			}
 
+			Home h = DtoHandler.createHomeDto(p, args[0]);
+			hh.createHome(h);
+			p.sendMessage(main.colorize("&4Successfully set home: " + h.getName()));
+		} else {
+			p.sendMessage(main.colorize("&cYou have no permission to use that"));
 		}
+
 		return false;
 	}
 

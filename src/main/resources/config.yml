@@ -1,0 +1,67 @@
+#####################################################################
+# vBox Official is licensed under GNU 3 Non Commercial distrobution #
+#                                                                   #
+# vBox was created by xFlakesID AKA Vyx/MichaJDev to fight the      #
+# against admintools that ship bloatware, using memory that can     #
+# be used on other places!                                          #
+#####################################################################
+
+##############
+#   General  #
+##############
+
+#Add your server name to make people greetings message easier! Supports color code '&'
+ServerName: "Name"
+#Add a cool motd to make sure people retrieve the latest 
+MOTD: "Welcome to the server!"
+
+##############
+#    Data    #
+##############
+#setting any of these to TRUE makes the plugin use that type of databasing instead of YAML, if all are set to FALSE it will by default use YAML
+
+#WARNING: only change: Host, Port, Database, Username & Password!
+
+MySql:
+   use: false
+   adapter: "com.mysql.jdbc.Driver"
+   host: "localhost"
+   port: 3366
+   database: "dbname"
+   username: "root"
+   password: "password"
+SqLite:
+   use: false
+   adapter: "jdbc:sqlite:C:/"
+   file: "vBoxSqlLite.db"
+OracleDB:
+   use: false
+   adapter: "jbdc:oracle:thin:@//"
+   host: "localhost"
+   port: 1521
+   database: "dbname"
+   username: "root"
+   password: "password"
+MSSQL:
+   use: false
+   adapter: "jbdc:sqlserver://"
+   host: "localhost"
+   port: 1433
+   database: "dbname"
+   username: "root"
+   password: "password"
+Postgres: 
+   use: false
+   adapter: "jdbc:postgresql://"
+   host: "localhost"
+   port: 5432
+   database: "dbname"
+   username: "root"
+   password: "password"
+
+###############
+# Teleporting #
+###############
+#This sets the cooldown timer that players are allowed to use TPA commands
+TpaCooldown: "10s" 
+KeepAlive: "2m"

@@ -1,5 +1,7 @@
 package vBox.vboxofficial.commands;
 
+import java.util.List;
+
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -24,33 +26,42 @@ public class HomesCmd implements CommandExecutor {
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-		StringBuilder sb = new StringBuilder();
-		if (!(sender instanceof Player)) {
-			main.log("You cannot use this command as Console", LogSeverity.WARN);
-		} else {
-			Player p = (Player) sender;
-			if (p.hasPermission("vBox.homes")) {
-				if (args.length < 0) {
-					p.sendMessage(main.colorize("Usage: /homes"));
-				} else {
-					User u = DtoHandler.createUserDto(p);
-					if (!hh.getHomes(u).isEmpty()) {
+	    if (!(sender instanceof Player)) {
+	        main.log("You cannot use this command as Console", LogSeverity.WARN);
+	        return false;
+	    }
 
-						for (Home h : hh.getHomes(u)) {
-							sb.append(h.getName() + ", ");
-						}
-						p.sendMessage(main.colorizeNoTag("&6+&r-|&6Homes&r|--------------"));
-						p.sendMessage(sb.toString());
-						p.sendMessage(main.colorizeNoTag("&6+&r-|&6Homes&r|--------------"));
-					} else {
-						p.sendMessage(main.colorize("&cNo homes found!"));
-					}
-				}
-			} else {
-				p.sendMessage(main.colorize("&cYou do not have permission to do that"));
-			}
-		}
-		return false;
+	    Player p = (Player) sender;
+	    if (!p.hasPermission("vBox.homes")) {
+	        p.sendMessage(main.colorize("&cYou do not have permission to do that"));
+	        return false;
+	    }
+
+	    if (args.length < 1) {
+	        p.sendMessage(main.colorize("Usage: /homes"));
+	        return false;
+	    }
+
+	    User u = DtoHandler.createUserDto(p);
+	    List<Home> homes = hh.getHomes(u);
+	    if (homes.isEmpty()) {
+	        p.sendMessage(main.colorize("&cNo homes found!"));
+	        return false;
+	    }
+
+	    StringBuilder sb = new StringBuilder();
+	    for (Home h : homes) {
+	        sb.append(h.getName()).append(", ");
+	    }
+	    String homesList = sb.toString().trim();
+	    if (homesList.endsWith(",")) {
+	        homesList = homesList.substring(0, homesList.length() - 1);
+	    }
+	    p.sendMessage(main.colorizeNoTag("&6+&r-|&6Homes&r|--------------"));
+	    p.sendMessage(homesList);
+	    p.sendMessage(main.colorizeNoTag("&6+&r-|&6Homes&r|--------------"));
+	    return false;
 	}
+
 
 }

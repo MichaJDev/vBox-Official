@@ -7,10 +7,13 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
 import vBox.vboxofficial.Main;
+import vBox.vboxofficial.data.yml.YmlConfigHandler;
 import vBox.vboxofficial.dtos.Home;
 import vBox.vboxofficial.dtos.Spawn;
+import vBox.vboxofficial.dtos.Teleport;
 import vBox.vboxofficial.dtos.User;
 import vBox.vboxofficial.dtos.Warp;
+import vBox.vboxofficial.utils.TimerHandler;
 
 public class DtoHandler {
 
@@ -93,4 +96,25 @@ public class DtoHandler {
 		return w;
 	}
 
+	public static Teleport createTeleportDto(Player tper, Player target, Main main) {
+		Teleport tp = new Teleport();
+		YmlConfigHandler ch = new YmlConfigHandler(main);
+		tp.setTeleporter(createUserDto(tper));
+		tp.setTarget(createUserDto(target));
+		tp.setCoolDownTime(TimerHandler.getDate(ch.getConfig().getString("TpaCooldown")));
+		tp.setKeepAliveTime(TimerHandler.getDate(ch.getConfig().getString("KeepAlive")));
+		tp.setHash(UUID.randomUUID().toString().substring(0, 5));
+		return tp;
+	}
+
+	public static Teleport createTeleportDtp(FileConfiguration cfg, Main main) {
+		Teleport tp = new Teleport();
+		tp.setTeleporter(
+				DtoHandler.createUserDto(main.getServer().getPlayer(UUID.fromString(cfg.getString("Teleporter")))));
+		tp.setTarget(DtoHandler.createUserDto(main.getServer().getPlayer(UUID.fromString(cfg.getString("Target")))));
+		tp.setCoolDownTime(cfg.getString("Cooldown"));
+		tp.setKeepAliveTime(cfg.getString("KeepAlive"));
+		tp.setHash(cfg.getString("Hash"));
+		return tp;
+	}
 }

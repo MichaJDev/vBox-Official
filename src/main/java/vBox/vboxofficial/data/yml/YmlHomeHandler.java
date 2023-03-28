@@ -14,19 +14,18 @@ import vBox.vboxofficial.dtos.User;
 import vBox.vboxofficial.dtos.handlers.DtoHandler;
 
 public class YmlHomeHandler {
+	private final Main main;
 
-	Main main = Main.getInstance();
-
-	public YmlHomeHandler(Main _main) {
-		main = _main;
-
+	public YmlHomeHandler(Main main) {
+		this.main = main;
 	}
 
 	public void createHomesFolder(User u) {
 		YmlUserHandler uh = new YmlUserHandler(main);
 		File dir = new File(uh.getUserFolder(u), "homes");
-		if (!dir.exists())
+		if (!dir.exists()) {
 			dir.mkdirs();
+		}
 	}
 
 	public File getHomeFile(Home h) {
@@ -39,8 +38,7 @@ public class YmlHomeHandler {
 	}
 
 	public void createHome(Home h) {
-
-		File file = new File(getHomesFolder(h.getOwner()), "Home#" + h.getHash() + ".yml");
+		File file = getHomeFile(h);
 		if (!file.exists()) {
 			try {
 				file.createNewFile();
