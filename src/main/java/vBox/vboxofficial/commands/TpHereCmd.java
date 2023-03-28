@@ -23,7 +23,7 @@ public class TpHereCmd implements CommandExecutor {
 				main.log("This command cannot be used by Console!", LogSeverity.INFO);
 			} else {
 				Player p = (Player) sender;
-				if (p.hasPermission("vBox.teleport.tp")) {
+				if (p.hasPermission("vBox.teleport.tphere")) {
 					Player tp = main.getServer().getPlayer(args[0]);
 					if (tp != null) {
 						tp.sendMessage(main.colorize("&aTeleporting to: &r" + p.getName()));
