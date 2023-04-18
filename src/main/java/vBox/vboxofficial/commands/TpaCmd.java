@@ -41,12 +41,13 @@ public class TpaCmd implements CommandExecutor {
 			}
 			Player tp = main.getServer().getPlayer(args[0]);
 			if (tp != null) {
+				TimerHandler tHandler = new TimerHandler(main);
 				Teleport tpDTO = DtoHandler.createTeleportDto(p, tp, main);
 				th.createTpFile(tpDTO);
 				tp.sendMessage(
 						main.colorize(p.getName() + " wants to teleport to you, type &a/tpaccept &r or &c/tpdeny"));
 				p.sendMessage(main.colorize("&aTeleport request send to " + tp.getName()));
-				TimerHandler.startDeleteTimer(tpDTO, main);
+				tHandler.startDeleteTimer(tpDTO);
 			}
 
 		}

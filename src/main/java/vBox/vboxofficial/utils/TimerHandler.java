@@ -18,7 +18,11 @@ import vBox.vboxofficial.dtos.Teleport;
 
 public class TimerHandler {
 
-	public static boolean isTimeUp(String banTime) {
+	private Main main = Main.getInstance();
+	public TimerHandler(Main _main){
+		main = _main;
+	}
+	public boolean isTimeUp(String banTime) {
 		SimpleDateFormat sdFormat = new SimpleDateFormat("yyyy-MM-dd-hh:mm:ss");
 		Date banDate = null;
 		LocalDateTime now = LocalDateTime.now();
@@ -32,7 +36,7 @@ public class TimerHandler {
 		return banInstant.isBefore(nowInstant);
 	}
 
-	public static String getDate(String timeString) {
+	public String getDate(String timeString) {
 		LocalDateTime now = LocalDateTime.now(ZoneOffset.UTC);
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd-hh:mm:ss");
 		long time = 0;
@@ -64,7 +68,7 @@ public class TimerHandler {
 		return formattedDate;
 	}
 
-	public static boolean isValidTimeFormat(String timeString) {
+	public boolean isValidTimeFormat(String timeString) {
 		if (timeString == null || timeString.isEmpty()) {
 			return false;
 		}
@@ -82,9 +86,9 @@ public class TimerHandler {
 		return count == 1; // only one time parameter
 	}
 
-	public static void startDeleteTimer(Teleport tp, Main main) {
+	public void startDeleteTimer(Teleport tp) {
 		String dateString = tp.getCoolDownTime();
-		Date d1 = null;
+		Date d1 = new Date();
 		try {
 			d1 = new SimpleDateFormat("yyyy-MM-dd-hh:mm:ss").parse(dateString);
 		} catch (ParseException e) {
