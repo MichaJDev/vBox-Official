@@ -61,7 +61,7 @@ public class YmlTpHandler {
 		for (File file : getTpFolder().listFiles()) {
 			FileConfiguration cfg = YamlConfiguration.loadConfiguration(file);
 			if (hash.equals(cfg.getString("Hash"))) {
-				tp = DtoHandler.createTeleportDtp(cfg, main);
+				tp = DtoHandler.createTeleportDto(cfg, main);
 			}
 		}
 		return tp;
@@ -72,7 +72,7 @@ public class YmlTpHandler {
 		for (File file : getTpFolder().listFiles()) {
 			FileConfiguration cfg = YamlConfiguration.loadConfiguration(file);
 			if (u.getUuid().toString().equals(cfg.get("Target"))) {
-				tp = DtoHandler.createTeleportDtp(cfg, main);
+				tp = DtoHandler.createTeleportDto(cfg, main);
 			}
 		}
 		return tp;

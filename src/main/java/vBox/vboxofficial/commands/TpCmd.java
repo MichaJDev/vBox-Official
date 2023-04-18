@@ -6,6 +6,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import vBox.vboxofficial.Main;
+import vBox.vboxofficial.data.yml.YmlBackHandler;
+import vBox.vboxofficial.dtos.handlers.DtoHandler;
 import vBox.vboxofficial.utils.LogSeverity;
 
 public class TpCmd implements CommandExecutor {
@@ -37,8 +39,10 @@ public class TpCmd implements CommandExecutor {
 	        
 	        Player tp = main.getServer().getPlayer(args[0]);
 	        if (tp != null) {
-	            p.sendMessage(main.colorize("&aTeleporting to: &r" + tp.getName()));
+				YmlBackHandler bh = new YmlBackHandler(main);
+				p.sendMessage(main.colorize("&aTeleporting to: &r" + tp.getName()));
 	            p.teleport(tp.getLocation());
+				bh.createBackFile(DtoHandler.createBackDto(p));
 	        } else {
 	            p.sendMessage(main.colorize("&cPlayer not found!"));
 	        }
