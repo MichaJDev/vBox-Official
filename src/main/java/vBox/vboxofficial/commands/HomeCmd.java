@@ -6,6 +6,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import vBox.vboxofficial.Main;
+import vBox.vboxofficial.data.yml.YmlBackHandler;
 import vBox.vboxofficial.data.yml.YmlHomeHandler;
 import vBox.vboxofficial.dtos.Home;
 import vBox.vboxofficial.dtos.handlers.DtoHandler;
@@ -46,9 +47,12 @@ public class HomeCmd implements CommandExecutor {
 
 	    Home h = hh.getHome(DtoHandler.createUserDto(p), args[0]);
 	    if (h.getHash() != null) {
-	        p.sendMessage(main.colorize("Teleporting you to home: " + h.getName()));
+			YmlBackHandler bh = new YmlBackHandler(main);
+			p.sendMessage(main.colorize("Teleporting you to home: " + h.getName()));
 	        p.sendMessage(h.getLoc().getBlockX() + ", " + h.getLoc().getBlockY() + ", " + h.getLoc().getBlockZ());
 	        p.teleport(h.getLoc());
+			bh.createBackFile(DtoHandler.createBackDto(p));
+			p.sendMessage(main.colorize("&aCreated back location you can use &r/back to return to your previous location."));
 	    } else {
 	        p.sendMessage(main.colorize("&cThat home does not exist!"));
 	    }

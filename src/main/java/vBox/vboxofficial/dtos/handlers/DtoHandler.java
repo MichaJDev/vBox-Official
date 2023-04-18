@@ -8,11 +8,7 @@ import org.bukkit.entity.Player;
 
 import vBox.vboxofficial.Main;
 import vBox.vboxofficial.data.yml.YmlConfigHandler;
-import vBox.vboxofficial.dtos.Home;
-import vBox.vboxofficial.dtos.Spawn;
-import vBox.vboxofficial.dtos.Teleport;
-import vBox.vboxofficial.dtos.User;
-import vBox.vboxofficial.dtos.Warp;
+import vBox.vboxofficial.dtos.*;
 import vBox.vboxofficial.utils.TimerHandler;
 
 public class DtoHandler {
@@ -108,7 +104,7 @@ public class DtoHandler {
         return tp;
     }
 
-    public static Teleport createTeleportDtp(FileConfiguration cfg, Main main) {
+    public static Teleport createTeleportDto(FileConfiguration cfg, Main main) {
         Teleport tp = new Teleport();
         tp.setTeleporter(
                 DtoHandler.createUserDto(main.getServer().getPlayer(UUID.fromString(cfg.getString("Teleporter")))));
@@ -118,4 +114,19 @@ public class DtoHandler {
         tp.setHash(cfg.getString("Hash"));
         return tp;
     }
+
+    public static Back createBackDto(Player p) {
+        Back b = new Back();
+        b.setUser(createUserDto(p));
+        b.setLocation(p.getLocation());
+        return b;
+    }
+
+    public static Back createBackDto(FileConfiguration cfg, Main main) {
+        Back b = new Back();
+        b.setUser(DtoHandler.createUserDto(main.getServer().getPlayer(UUID.fromString(cfg.getString("User")))));
+        b.setLocation(DtoHandler.createUserDto(main.getServer().getPlayer(UUID.fromString(cfg.getString("User")))).getLoc());
+        return b;
+    }
+
 }

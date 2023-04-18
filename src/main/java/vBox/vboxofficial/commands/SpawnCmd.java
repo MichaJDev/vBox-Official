@@ -6,8 +6,10 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import vBox.vboxofficial.Main;
+import vBox.vboxofficial.data.yml.YmlBackHandler;
 import vBox.vboxofficial.data.yml.YmlSpawnHandler;
 import vBox.vboxofficial.dtos.Spawn;
+import vBox.vboxofficial.dtos.handlers.DtoHandler;
 import vBox.vboxofficial.utils.LogSeverity;
 
 public class SpawnCmd implements CommandExecutor {
@@ -37,10 +39,12 @@ public class SpawnCmd implements CommandExecutor {
 	            p.sendMessage(main.colorize("&cToo many arguments: Usage /spawn"));
 	            return true;
 	        }
-
+			YmlBackHandler bh = new YmlBackHandler(main);
 	        Spawn s = sh.getSpawn();
 	        p.teleport(s.getLoc());
 	        p.sendMessage(main.colorize("&aTeleported to Spawn!"));
+			bh.createBackFile(DtoHandler.createBackDto(p));;
+			p.sendMessage(main.colorize("&"));
 	    }
 
 	    return true;
