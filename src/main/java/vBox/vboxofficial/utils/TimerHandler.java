@@ -19,6 +19,7 @@ import vBox.vboxofficial.dtos.Teleport;
 public class TimerHandler {
 
 	private Main main = Main.getInstance();
+
 	public TimerHandler(Main _main){
 		main = _main;
 	}
@@ -88,7 +89,7 @@ public class TimerHandler {
 
 	public void startDeleteTimer(Teleport tp) {
 		String dateString = tp.getCoolDownTime();
-		Date d1 = new Date();
+		Date d1 = null;
 		try {
 			d1 = new SimpleDateFormat("yyyy-MM-dd-hh:mm:ss").parse(dateString);
 		} catch (ParseException e) {
