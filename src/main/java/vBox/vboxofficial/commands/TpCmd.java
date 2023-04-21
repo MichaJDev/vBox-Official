@@ -7,6 +7,8 @@ import org.bukkit.entity.Player;
 
 import vBox.vboxofficial.Main;
 import vBox.vboxofficial.data.yml.YmlBackHandler;
+import vBox.vboxofficial.data.yml.YmlTpHandler;
+import vBox.vboxofficial.dtos.User;
 import vBox.vboxofficial.dtos.handlers.DtoHandler;
 import vBox.vboxofficial.utils.LogSeverity;
 
@@ -36,7 +38,14 @@ public class TpCmd implements CommandExecutor {
 	            p.sendMessage(main.colorize("&cUsage: /tp <player>"));
 	            return true;
 	        }
-	        
+
+			User u = DtoHandler.createUserDto(p);
+			YmlTpHandler tph = new YmlTpHandler(main);
+			if (tph.isToggled(u)) {
+				p.sendMessage(main.colorize("This player has Tp off!"));
+				return false;
+			}
+
 	        Player tp = main.getServer().getPlayer(args[0]);
 	        if (tp != null) {
 				YmlBackHandler bh = new YmlBackHandler(main);

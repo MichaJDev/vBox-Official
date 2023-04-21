@@ -9,6 +9,7 @@ import vBox.vboxofficial.Main;
 import vBox.vboxofficial.data.yml.YmlBackHandler;
 import vBox.vboxofficial.data.yml.YmlTpHandler;
 import vBox.vboxofficial.dtos.Teleport;
+import vBox.vboxofficial.dtos.User;
 import vBox.vboxofficial.dtos.handlers.DtoHandler;
 import vBox.vboxofficial.utils.LogSeverity;
 import vBox.vboxofficial.utils.TimerHandler;
@@ -36,6 +37,13 @@ public class TpaCmd implements CommandExecutor {
                 return false;
             }
 
+            User u = DtoHandler.createUserDto(p);
+            YmlTpHandler tph = new YmlTpHandler(main);
+            if (tph.isToggled(u)) {
+                p.sendMessage(main.colorize("This player has Tp off!"));
+                return false;
+            }
+
             if (args.length != 1) {
                 p.sendMessage(main.colorize("&cInvalid Arguments! Usage: /tpa <name>"));
                 return false;
@@ -50,10 +58,7 @@ public class TpaCmd implements CommandExecutor {
                         main.colorize(p.getName() + " wants to teleport to you, type &a/tpaccept &r or &c/tpdeny"));
                 p.sendMessage(main.colorize("&aTeleport request send to " + tp.getName()));
                 timerHandler.startDeleteTimer(tpDTO);
-
-
             }
-
         }
         return false;
     }
