@@ -4,25 +4,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import net.md_5.bungee.api.ChatColor;
-import vBox.vboxofficial.commands.BackCmd;
-import vBox.vboxofficial.commands.DelHomeCmd;
-import vBox.vboxofficial.commands.DelWarpCmd;
-import vBox.vboxofficial.commands.HomeCmd;
-import vBox.vboxofficial.commands.HomesCmd;
-import vBox.vboxofficial.commands.LookupCmd;
-import vBox.vboxofficial.commands.SetHomeCmd;
-import vBox.vboxofficial.commands.SetSpawnCmd;
-import vBox.vboxofficial.commands.SetWarpCmd;
-import vBox.vboxofficial.commands.SpawnCmd;
-import vBox.vboxofficial.commands.TpAcceptCmd;
-import vBox.vboxofficial.commands.TpCmd;
-import vBox.vboxofficial.commands.TpDenyCmd;
-import vBox.vboxofficial.commands.TpHereCmd;
-import vBox.vboxofficial.commands.TpToggleCmd;
-import vBox.vboxofficial.commands.TpaCmd;
-import vBox.vboxofficial.commands.TpaHereCmd;
-import vBox.vboxofficial.commands.WarpCmd;
-import vBox.vboxofficial.commands.WarpsCmd;
+import vBox.vboxofficial.commands.*;
 import vBox.vboxofficial.data.yml.YmlConfigHandler;
 import vBox.vboxofficial.data.yml.YmlSpawnHandler;
 import vBox.vboxofficial.data.yml.YmlTpHandler;
@@ -30,6 +12,7 @@ import vBox.vboxofficial.data.yml.YmlUserHandler;
 import vBox.vboxofficial.data.yml.YmlWarpHandler;
 import vBox.vboxofficial.dtos.User;
 import vBox.vboxofficial.listeners.UserListener;
+import vBox.vboxofficial.utils.GeneralHandler;
 import vBox.vboxofficial.utils.LogSeverity;
 
 public class Main extends JavaPlugin {
@@ -41,6 +24,7 @@ public class Main extends JavaPlugin {
 	private YmlConfigHandler ch = new YmlConfigHandler(this);
 	private YmlTpHandler th = new YmlTpHandler(this);
 
+	private GeneralHandler gh = new GeneralHandler(this);
 	public static Main getInstance() {
 		return main;
 
@@ -93,6 +77,8 @@ public class Main extends JavaPlugin {
 		getListeners();
 		log("Injecting Commands", LogSeverity.INFO);
 		getCommands();
+		log("Setting up BanChecker Module", LogSeverity.INFO);
+		gh.BanChecker();
 	}
 
 	private void getCommands() {
@@ -115,6 +101,8 @@ public class Main extends JavaPlugin {
 		getCommand("tpdeny").setExecutor(new TpDenyCmd(this));
 		getCommand("tptoggle").setExecutor(new TpToggleCmd(this));
 		getCommand("back").setExecutor(new BackCmd(this));
+
+		getCommand("ban").setExecutor(new BanCmd(this));
 	}
 
 	private void getListeners() {

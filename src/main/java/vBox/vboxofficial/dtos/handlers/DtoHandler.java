@@ -73,9 +73,8 @@ public class DtoHandler {
 
     public static Warp createWarpDto(Player p, String name) {
         Warp w = new Warp();
-        String hash = UUID.randomUUID().toString().substring(0, 5);
         w.setCreator(createUserDto(p));
-        w.setHash(hash);
+        w.setHash(UUID.randomUUID().toString().substring(0, 5));
         w.setLocation(p.getLocation());
         w.setName(name);
         return w;
@@ -126,6 +125,31 @@ public class DtoHandler {
         Back b = new Back();
         b.setUser(DtoHandler.createUserDto(main.getServer().getPlayer(UUID.fromString(cfg.getString("User")))));
         b.setLocation(DtoHandler.createUserDto(main.getServer().getPlayer(UUID.fromString(cfg.getString("User")))).getLoc());
+        return b;
+    }
+
+    public static Ban createBanDto(Player p, Player target, String reason, String time){
+        Ban b = new Ban();
+        b.setBanner(createUserDto(p));
+        b.setBanned(createUserDto(target));
+        b.setReason(reason);
+        b.setDate(time);
+        b.setHash(UUID.randomUUID().toString().substring(0, 5));
+        b.setActive(true);
+        return b;
+    }
+
+    public static Ban createBanDto(FileConfiguration cfg , Main main){
+        Ban b = new Ban();;
+        Player p = main.getServer().getPlayer(UUID.fromString(cfg.getString("Banner")));
+        Player target = main.getServer().getPlayer(UUID.fromString(cfg.getString("Banned")));
+        TimerHandler th = new TimerHandler(main);
+        b.setBanner(createUserDto(p));
+        b.setBanned(createUserDto(target));
+        b.setReason(cfg.getString("Reason"));
+        b.setDate(cfg.getString("Date"));
+        b.setHash(cfg.getString("Hash"));
+        b.setActive(cfg.getBoolean("Active"));
         return b;
     }
 
