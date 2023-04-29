@@ -103,6 +103,7 @@ public class Main extends JavaPlugin {
 		getCommand("back").setExecutor(new BackCmd(this));
 
 		getCommand("ban").setExecutor(new BanCmd(this));
+		getCommand("unban").setExecutor(new UnBanCmd(this));
 	}
 
 	private void getListeners() {
