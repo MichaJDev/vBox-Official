@@ -2,8 +2,6 @@ package vBox.vboxofficial.data.yml;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.entity.Player;
-import org.yaml.snakeyaml.Yaml;
 import vBox.vboxofficial.Main;
 import vBox.vboxofficial.dtos.Ban;
 import vBox.vboxofficial.dtos.User;
@@ -24,16 +22,30 @@ public class YmlBanHandler {
 
     YmlUserHandler uh = new YmlUserHandler(main);
 
+    /**
+     * Creates Folder within the Users folder to store Ban files.
+     *
+     * @param u User Object
+     */
     public void createBanFolder(User u) {
         File dir = new File(uh.getUserFolder(u), "Bans");
         if (!dir.exists())
             dir.mkdirs();
     }
 
+    /**
+     * Returns directory of the User's banfiles
+     * @param u User Object
+     * @return Directory that holds the banfiles
+     */
     public File getBanFolder(User u) {
         return new File(uh.getUserFolder(u), "Bans");
     }
 
+    /**
+     * Creates a new Banfile for the designated User
+     * @param b the Ban object necessary to create a Ban file
+     */
     public void createBanFile(Ban b) {
         if (!getBanFolder(b.getBanned()).exists()) {
             createBanFolder(b.getBanned());
@@ -49,11 +61,22 @@ public class YmlBanHandler {
         }
     }
 
+    /**
+     * Returns the banfile requested by the hash and the user
+     * @param u User object
+     * @param hash Hash of the Banfile
+     * @return the banfile
+     */
     public File getBanFile(User u, String hash) {
         File file = new File(getBanFolder(u), "Ban#" + hash + ".yml");
         return file;
     }
 
+    /**
+     * Fills banfile with necessary daya on the player
+     * @param b Ban Object
+     * @param f File
+     */
     private void fillBanFile(Ban b, File f) {
         FileConfiguration cfg = YamlConfiguration.loadConfiguration(f);
         cfg.addDefault("Banner", b.getBanner().getUuid().toString());
@@ -69,6 +92,11 @@ public class YmlBanHandler {
         }
     }
 
+    /**
+     * returns a list of all Bans of the designated user
+     * @param u User Object
+     * @return list of all bans the user ever had
+     */
     public List<Ban> getBans(User u) {
         List<Ban> banList = new ArrayList<Ban>();
         if (getBanFolder(u).listFiles().length > 0) {
@@ -81,6 +109,12 @@ public class YmlBanHandler {
         return banList;
     }
 
+    /**
+     * Returns a ban object with all stored data on the ban (reason and time included)
+     * @param u User Object
+     * @param hash Ban Hash Code
+     * @return Ban depending on the Hash
+     */
     public Ban getBan(User u, String hash) {
         Ban b = new Ban();
         for (File f : getBanFolder(u).listFiles()) {
@@ -104,6 +138,12 @@ public class YmlBanHandler {
         }
     }
 
+    /**
+     * Sets ban activity to the boolean given
+     * @param u User Object
+     * @param hash Ban Hash Code
+     * @param activity boolean of the activity
+     */
     public void setBanActivity(User u, String hash, boolean activity) {
         Ban b = getBan(u, hash);
         b.setActive(activity);
@@ -111,6 +151,11 @@ public class YmlBanHandler {
         updateBan(b);
     }
 
+    /**
+     * Checks if User is banned
+     * @param u User Object
+     * @return returns boolean if they are banned.
+     */
     public boolean isBanned(User u) {
         File dir = getBanFolder(u);
         boolean isBanned = false;
@@ -123,6 +168,11 @@ public class YmlBanHandler {
         return isBanned;
     }
 
+    /**
+     * Returns the latest active ban
+     * @param u User Object
+     * @return returns active bans
+     */
     public Ban getActiveBan(User u) {
         Ban b = new Ban();
         for (File file : getBanFolder(u).listFiles()) {

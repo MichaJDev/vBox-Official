@@ -5,13 +5,10 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import vBox.vboxofficial.Main;
 import vBox.vboxofficial.dtos.Back;
-import vBox.vboxofficial.dtos.User;
 import vBox.vboxofficial.dtos.handlers.DtoHandler;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class YmlBackHandler {
@@ -23,12 +20,19 @@ public class YmlBackHandler {
         main = _main;
     }
 
+    /**
+     * Creates Backs Directory
+     */
     public void createBackFolder() {
         File dir = new File(main.getDataFolder(), "backs");
         if (!dir.exists())
             dir.mkdirs();
     }
 
+    /**
+     * returns Backs Directory
+     * @return
+     */
     public File getBacksFolder() {
         File dir = new File(main.getDataFolder(), "backs");
         if (!dir.exists())
@@ -36,7 +40,14 @@ public class YmlBackHandler {
         return dir;
     }
 
+    /**
+     * Creates a backfile
+     * @param b Back Object
+     */
     public void createBackFile(Back b) {
+        if(!getBacksFolder().exists()){
+            createBackFolder();
+        }
         File file = new File(getBacksFolder(), b.getUser().getName() + ".yml");
         if (!file.exists()) {
             try {
@@ -56,6 +67,11 @@ public class YmlBackHandler {
         }
     }
 
+    /**
+     * Fills back file with necessary information
+     * @param b Back Object
+     * @param f File
+     */
     private void fillBackFile(Back b, File f) {
         FileConfiguration cfg = YamlConfiguration.loadConfiguration(f);
         cfg.addDefault("User", b.getUser().getUuid());
@@ -70,8 +86,13 @@ public class YmlBackHandler {
         }
     }
 
+    /**
+     * Returns Back file
+     * @param b Back Object
+     * @return returns Back File.
+     */
     public File getBackFile(Back b){
-        File f = new File(getBackFile(b), b.getUser().getName() + ".yml");
+        File f = new File(getBacksFolder(), b.getUser().getName() + ".yml");
         if(!f.exists())
             return null;
         return f;
