@@ -6,9 +6,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import vBox.vboxofficial.Main;
-import vBox.vboxofficial.data.yml.YmlBackHandler;
-import vBox.vboxofficial.data.yml.YmlTpHandler;
-import vBox.vboxofficial.dtos.handlers.DtoHandler;
 import vBox.vboxofficial.utils.LogSeverity;
 
 public class TpAcceptCmd implements CommandExecutor {
@@ -32,15 +29,6 @@ public class TpAcceptCmd implements CommandExecutor {
 				return false;
 			}
 
-			YmlTpHandler tph = new YmlTpHandler(main);
-
-			if(tph.getTp(DtoHandler.createUserDto(p)).getHash() != null){
-				YmlBackHandler bh = new YmlBackHandler(main);
-				bh.createBackFile(DtoHandler.createBackDto(p));
-				p.sendMessage(main.colorize("&aCreated back location you can use &r/back to return to your previous location."));
-			}else{
-				p.sendMessage(main.colorize("&cNo tpa-request found on your name."));
-			}
 		}
 		return false;
 	}
